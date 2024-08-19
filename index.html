@@ -11,12 +11,11 @@
             color: lightblue;
             font-family: 'Courier New', monospace;
             margin: 0;
-            padding: 0;
+            padding: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            overflow: hidden;
+            overflow: auto;
         }
 
         .terminal {
@@ -28,7 +27,7 @@
             max-width: 600px;
             min-height: 300px;
             font-family: 'Courier New', monospace;
-            animation: fadeIn 10s ease-in-out;
+            animation: fadeIn 2s ease-in-out;
         }
 
         @keyframes fadeIn {
@@ -100,7 +99,7 @@
 
 <body>
     <div class="terminal">
-        <div class="output">UNSC | TERMINAL, USE CMDS FOR MORE INFO</div>
+        <div class="output"><h1>UNSC | TERMINAL</h1></div>
         <div class="output"></div>
         <div class="input-line">
             <span class="blink">>></span>
