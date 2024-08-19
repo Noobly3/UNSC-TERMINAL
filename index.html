@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNSC | TERMINAL</title>
+    <style>
+        body {
+            background-color: black;
+            color: lightblue;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .terminal {
+            background-color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px lightblue;
+            width: 80%;
+            max-width: 600px;
+            min-height: 300px;
+            font-family: 'Courier New', monospace;
+            animation: fadeIn 10s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .output {
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .input-line {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-line .blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .input {
+            color: lightblue;
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 100%;
+            font-family: 'Courier New', monospace;
+        }
+
+        .input::placeholder {
+            color: lightblue;
+        }
+
+        .button {
+            background-color: transparent;
+            border: 1px solid lightblue;
+            color: lightblue;
+            padding: 5px 10px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: lightblue;
+            color: black;
+        }
+
+        .link {
+            color: lightblue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="terminal">
+        <div class="output">UNSC | TERMINAL, USE CMDS FOR MORE INFO</div>
+        <div class="output"></div>
+        <div class="input-line">
+            <span class="blink">>></span>
+            <input id="command-line" class="input" autofocus placeholder="" />
+        </div>
+    </div>
+
+    <script>
+        const outputDiv = document.querySelector('.output');
+        const inputField = document.getElementById('command-line');
+        const prompt = document.querySelector('.blink');
+        let isInitialLoad = true;
+
+        const responses = {
+            'CMDS': `AVAIBLE COMMANDS: WHO IS NELLY?, REGULATIONS, TOUCH NELLY, CMDS, OUT OF ORDER`,
+            'OUT OF ORDER': '',
+            'OUT OF ORDER': `OUT OF ORDER`,
+            'TOUCH NELLY': `ARE YOU SURE? <button class="button" onclick="confirmAction('YES')">Yes</button><button class="button" onclick="confirmAction('NO')">No</button>`,
+            'OUT OF ORDER': `OUT OF ORDER`,
+            'WHO IS NELLY?': `THE SMELLY`,
+            'REGULATIONS': `DONT TOUCH NELLY`,
+        };
+
+        inputField.addEventListener('keyup', function (event) {
+            if (event.key === 'Enter') {
+                const command = inputField.value.toUpperCase();
+                inputField.value = '';
+
+                if (isInitialLoad) {
+                    isInitialLoad = false;
+                }
+
+                setTimeout(() => {
+                    prompt.style.opacity = 0;
+                    setTimeout(() => {
+                        prompt.style.opacity = 1;
+
+                        if (command.trim() === '') {
+                            return;
+                        }
+
+                        let output = '';
+                        let response = responses[command];
+
+                        if (response) {
+                            output = `<div class="output">${response}</div>`;
+                        } else {
+                            output = `<div class="output">ERROR 404 NOT FOUND. TYPE 'CMDS' INSTEAD TO LEARN MORE INFO.</div>`;
+                        }
+
+                        outputDiv.innerHTML += output;
+                        outputDiv.scrollTop = outputDiv.scrollHeight;
+                    }, Math.random() * 500 + 50);
+                }, Math.random() * 1000 + 500);
+            }
+        });
+
+        function confirmAction(choice) {
+            if (choice === 'YES') {
+                outputDiv.innerHTML += `<div class="output">DEMOTED!</div>`;
+            } else {
+                outputDiv.innerHTML += `<div class="output">PROMOTED!</div>`;
+            }
+        }
+
+        function openLink(link) {
+            window.open(link, '_blank');
+        }
+    </script>
+</body>
+
+</html>
